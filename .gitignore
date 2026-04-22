@@ -1,0 +1,65 @@
+# python 
+.DS_Store
+.idea
+.ipynb_checkpoints/
+.vscode
+__pycache__/
+*.bin
+*.pkl
+*.pt
+*.pyc
+input.txt
+.env
+.venv
+testing-backend/
+save-models/
+data/
+
+# Dependencies
+
+/node_modules
+/.pnp
+.pnp.js
+
+# Next.js build output
+
+/.next/
+/out/
+
+# Production build
+
+/build
+
+# Logs
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Vercel
+
+.vercel
+
+# TypeScript
+
+*.tsbuildinfo
+next-env.d.ts
+
+# OS files
+
+.DS_Store
+Thumbs.db
+
+# IDEs
+
+.vscode/
+.idea/
+
+# Coverage
+
+/coverage
+
+# Misc
+
+*.pem

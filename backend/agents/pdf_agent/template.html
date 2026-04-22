@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #eef2f7;
+    padding: 30px;
+    color: #333;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+/* HEADER */
+.header {
+    background: linear-gradient(90deg, #e9edf5, #dfe6f1);
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+}
+
+.header-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.header-table td {
+    vertical-align: top;
+}
+
+.header-left {
+    text-align: left;
+}
+
+.header-right {
+    text-align: right;
+}
+
+.patient-name {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.meta {
+    margin-top: 6px;
+    color: #666;
+    font-size: 14px;
+}
+
+.badge {
+    display: inline-block;
+    background: #eef1f7;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+/* CARDS */
+.card {
+    background: #f8fafc;
+    padding: 18px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.card-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* SECTION COLORS */
+.beige {
+    background: #f4e8db;
+}
+
+.blue {
+    background: #e6edf7;
+}
+
+/* TABLES */
+table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.data-table th {
+    text-align: left;
+    background: #eef2f7;
+    padding: 10px;
+}
+
+table.data-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* SUMMARY TABLE */
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.summary-table td {
+    padding: 6px 0;
+    vertical-align: top;
+}
+
+.summary-table .label {
+    font-weight: 600;
+    width: 220px;
+    color: #444;
+}
+
+/* STATUS COLORS */
+.green {
+    color: #2e9e57;
+    font-weight: 600;
+}
+
+.amber {
+    color: #d48b1f;
+    font-weight: 600;
+}
+
+.red {
+    color: #d64545;
+    font-weight: 600;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<div class="header">
+    <table class="header-table">
+        <tr>
+            <td class="header-left">
+                <div class="patient-name">{{ name }}</div>
+                <div class="meta">
+                    Weight: {{ weight }} | Height: {{ height }} | Age: {{ age }}
+                </div>
+            </td>
+
+            <td class="header-right">
+                <div class="badge">
+                    ID: {{ id }} | Date: {{ date }}
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- PATIENT SUMMARY -->
+<div class="card beige">
+    <div class="card-title">Patient Summary</div>
+
+    <table class="summary-table">
+        <tr>
+            <td class="label">Demographics</td>
+            <td>: {{ patient_summary.demographics }}</td>
+        </tr>
+
+        <tr>
+            <td class="label">Chief complaint</td>
+            <td>: {{ patient_summary.chief_complaint }}</td>
+        </tr>
+
+        <tr>
+            <td class="label">Symptoms present</td>
+            <td>: {{ patient_summary.symptoms_present | join(', ') }}</td>
+        </tr>
+
+        <tr>
+            <td class="label">Symptoms absent</td>
+            <td>: {{ patient_summary.symptoms_absent | join(', ') }}</td>
+        </tr>
+
+        <tr>
+            <td class="label">Duration / onset</td>
+            <td>: {{ patient_summary.duration_onset }}</td>
+        </tr>
+
+        <tr>
+            <td class="label">Relevant history</td>
+            <td>: {{ patient_summary.relevant_history }}</td>
+        </tr>
+    </table>
+</div>
+
+<!-- CONVERSATION SUMMARY -->
+<div class="card blue">
+    <div class="card-title">Conversation Summary</div>
+    <p>
+        {% for s in summary %}
+            {{ s }}{% if not loop.last %} {% endif %}
+        {% endfor %}
+    </p>
+</div>
+
+<!-- VITALS -->
+<div class="card">
+    <div class="card-title">AI Vital & Biomarker Overview</div>
+    <table class="data-table">
+        <tr>
+            <th>Vital</th>
+            <th>Value</th>
+            <th>Status</th>
+        </tr>
+        {% for v in vitals %}
+        <tr>
+            <td>{{ v.name }}</td>
+            <td>{{ v.value }}</td>
+            <td class="{% if 'Green' in v.status %}green{% elif 'Amber' in v.status %}amber{% else %}red{% endif %}">
+                {{ v.status }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<!-- CLINICAL SUPPORT -->
+<div class="card">
+    <div class="card-title">Clinical Support (Not a Diagnosis)</div>
+
+    <p>
+        <b>Potential Indicators:</b><br>
+        {{ clinical_support.indicators }}
+    </p>
+
+    <p><b>Suggested Clinical Focus:</b></p>
+    <ol>
+        {% for f in clinical_support.focus %}
+        <li>{{ f }}</li>
+        {% endfor %}
+    </ol>
+</div>
+
+</div>
+</body>
+</html>
