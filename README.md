@@ -143,14 +143,6 @@ graph TD
 
 ---
 
-## 3. High-Fidelity Architectural Visual
-
-Below is a visual representation of the system's "Team of Agents" architecture.
-
-![Technical Architecture](/Users/abhishek/.gemini/antigravity/brain/ededa3f5-fff2-4df8-b1c5-307966bc35a4/system_architecture_diagram_1777021266443.png)
-
----
-
 ## 4. Endpoint to Agent Mapping
 
 | Endpoint | Primary Agent | Purpose |
